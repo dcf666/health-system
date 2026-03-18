@@ -248,11 +248,11 @@ app.get('/', (req, res) => {
     </div>
     
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('records')">📋 健康档案</button>
-      <button class="tab" onclick="switchTab('metrics')">📊 健康指标</button>
-      <button class="tab" onclick="switchTab('meds')">💊 用药记录</button>
-      <button class="tab" onclick="switchTab('meals')">🍽️ 饮食记录</button>
-      <button class="tab" onclick="switchTab('ai')">🤖 AI健康助手</button>
+      <button class="tab active" onclick="switchTab('records', this)">📋 健康档案</button>
+      <button class="tab" onclick="switchTab('metrics', this)">📊 健康指标</button>
+      <button class="tab" onclick="switchTab('meds', this)">💊 用药记录</button>
+      <button class="tab" onclick="switchTab('meals', this)">🍽️ 饮食记录</button>
+      <button class="tab" onclick="switchTab('ai', this)">🤖 AI健康助手</button>
     </div>
     
     <!-- 健康档案 -->
@@ -487,19 +487,20 @@ app.get('/', (req, res) => {
     }
     
     // 切换标签页
-    function switchTab(tabId) {
+    function switchTab(tabId, btn) {
       // 移除所有active类
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       
-      // 找到点击的按钮并添加active
-      if (event && event.target) {
-        event.target.classList.add('active');
+      // 使用传入的按钮元素或通过ID查找
+      if (btn) {
+        btn.classList.add('active');
       } else {
-        // 如果没有event，使用tabId查找对应的按钮
         const tabMap = { 'records': 0, 'metrics': 1, 'meds': 2, 'meals': 3, 'ai': 4 };
-        const idx = tabMap[tabId] || 0;
-        document.querySelectorAll('.tab')[idx].classList.add('active');
+        const idx = tabMap[tabId];
+        if (idx !== undefined) {
+          document.querySelectorAll('.tab')[idx].classList.add('active');
+        }
       }
       
       // 显示对应内容
