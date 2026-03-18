@@ -598,7 +598,7 @@ app.get('/', (req, res) => {
     }
     
     // 表单提交 - 健康档案
-    document.getElementById('recordForm').onsubmit = function(e) {
+    document.getElementById('recordForm').onsubmit = async function(e) {
       e.preventDefault();
       const records = JSON.parse(localStorage.getItem('healthRecords') || '[]');
       
@@ -633,7 +633,7 @@ app.get('/', (req, res) => {
     };
     
     // 表单提交 - 健康指标
-    document.getElementById('metricForm').onsubmit = function(e) {
+    document.getElementById('metricForm').onsubmit = async function(e) {
       e.preventDefault();
       const metrics = JSON.parse(localStorage.getItem('metrics') || '[]');
       metrics.push({
