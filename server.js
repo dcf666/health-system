@@ -248,11 +248,11 @@ app.get('/', (req, res) => {
     </div>
     
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('records', this)">📋 健康档案</button>
-      <button class="tab" onclick="switchTab('metrics', this)">📊 健康指标</button>
-      <button class="tab" onclick="switchTab('meds', this)">💊 用药记录</button>
-      <button class="tab" onclick="switchTab('meals', this)">🍽️ 饮食记录</button>
-      <button class="tab" onclick="switchTab('ai', this)">🤖 AI健康助手</button>
+      <button class="tab active" onclick="switchTab('records')">📋 健康档案</button>
+      <button class="tab" onclick="switchTab('metrics')">📊 健康指标</button>
+      <button class="tab" onclick="switchTab('meds')">💊 用药记录</button>
+      <button class="tab" onclick="switchTab('meals')">🍽️ 饮食记录</button>
+      <button class="tab" onclick="switchTab('ai')">🤖 AI健康助手</button>
     </div>
     
     <!-- 健康档案 -->
@@ -487,23 +487,10 @@ app.get('/', (req, res) => {
     }
     
     // 切换标签页
-    function switchTab(tabId, btn) {
-      // 移除所有active类
+    function switchTab(tabId) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      
-      // 使用传入的按钮元素或通过ID查找
-      if (btn) {
-        btn.classList.add('active');
-      } else {
-        const tabMap = { 'records': 0, 'metrics': 1, 'meds': 2, 'meals': 3, 'ai': 4 };
-        const idx = tabMap[tabId];
-        if (idx !== undefined) {
-          document.querySelectorAll('.tab')[idx].classList.add('active');
-        }
-      }
-      
-      // 显示对应内容
+      event.target.classList.add('active');
       document.getElementById(tabId).classList.add('active');
     }
     
@@ -611,7 +598,7 @@ app.get('/', (req, res) => {
     }
     
     // 表单提交 - 健康档案
-    document.getElementById('recordForm').onsubmit = async function(e) {
+    document.getElementById('recordForm').onsubmit = function(e) {
       e.preventDefault();
       const records = JSON.parse(localStorage.getItem('healthRecords') || '[]');
       
@@ -646,7 +633,7 @@ app.get('/', (req, res) => {
     };
     
     // 表单提交 - 健康指标
-    document.getElementById('metricForm').onsubmit = async function(e) {
+    document.getElementById('metricForm').onsubmit = function(e) {
       e.preventDefault();
       const metrics = JSON.parse(localStorage.getItem('metrics') || '[]');
       metrics.push({
