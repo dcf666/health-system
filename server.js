@@ -488,9 +488,21 @@ app.get('/', (req, res) => {
     
     // 切换标签页
     function switchTab(tabId) {
+      // 移除所有active类
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      event.target.classList.add('active');
+      
+      // 找到点击的按钮并添加active
+      if (event && event.target) {
+        event.target.classList.add('active');
+      } else {
+        // 如果没有event，使用tabId查找对应的按钮
+        const tabMap = { 'records': 0, 'metrics': 1, 'meds': 2, 'meals': 3, 'ai': 4 };
+        const idx = tabMap[tabId] || 0;
+        document.querySelectorAll('.tab')[idx].classList.add('active');
+      }
+      
+      // 显示对应内容
       document.getElementById(tabId).classList.add('active');
     }
     
